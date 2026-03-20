@@ -1,0 +1,32 @@
+@EntpFlow_HostAddress = http://localhost:5282
+
+GET {{EntpFlow_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET https://localhost:7033/api/Users/313
+Accept: application/json
+
+###
+POST https://localhost:7033/api/Users/
+Content-Type: application/json
+
+{
+    "EmployeeId": "I097",
+    "name": "Abcd",
+    "email": "gbreter2@berkeley.edu",
+    "passwordHash": "12345rt67",
+    "departmentId": "5",
+    "isActive": false,
+    "roleID": 1
+}
+
+###
+DELETE https://localhost:7033/api/Users/11
+Accept: application/json
+
+###
+GET {{EntpFlow_HostAddress}}/api/Department
+Accept: application/json
+
