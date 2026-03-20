@@ -1,0 +1,39 @@
+<h2>Create User</h2>
+
+<form class="form-box">
+
+  <div>
+    <label>Employee Id</label>
+    <input type="text" [(ngModel)]="newUser.employeeId" name="employeeId" required>
+  </div>
+
+  <div>
+    <label>Name</label>
+    <input type="text" [(ngModel)]="newUser.name" name="name" required>
+  </div>
+
+  <div>
+    <label>Email</label>
+    <input type="email" [(ngModel)]="newUser.email" name="email" required>
+  </div>
+
+  <div>
+    <label>Password</label>
+    <input type="password" [(ngModel)]="newUser.passwordHash" name="passwordHash" required>
+  </div>
+
+  <div>
+    <label>Role</label>
+    <input type="text" [(ngModel)]="newUser.role" name="role" required>
+  </div>
+
+  <div>
+    <label>Department</label>
+    <input type="text" [(ngModel)]="newUser.department" name="department" required>
+  </div>
+
+  <br>
+
+  <button type="button" (click)="createUser()">Create User</button>
+
+</form>

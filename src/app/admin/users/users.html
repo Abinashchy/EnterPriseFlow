@@ -1,0 +1,61 @@
+<h2>Users</h2>
+
+<button class="add-btn" routerLink="/create-users"> + Create User</button>
+
+
+<div *ngIf="editingUser">
+
+  <h3>Edit User</h3>
+
+  <input [(ngModel)]="editingUser.name" name="name">
+  <input [(ngModel)]="editingUser.email" name="email">
+
+  <select [(ngModel)]="editingUser.role" name="role">
+    <option *ngFor="let role of roles">
+      {{role.name}}
+    </option>
+  </select>
+
+  <select [(ngModel)]="editingUser.department" name="department">
+    <option *ngFor="let d of departments">
+      {{d.name}}
+    </option>
+  </select>
+
+  <br><br>
+
+  <button (click)="updateUser()">Save</button>
+  <button (click)="cancelEdit()">Cancel</button>
+
+</div>
+
+<table class="users-table">
+  <thead>
+    <tr>
+      <th>Employee Id</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Department</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+        <tr *ngFor="let user of users">
+          <td>{{user.employeeID}}</td>
+          <td>{{user.name}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.role}}</td>
+          <td>{{user.department}}</td>
+
+          <td>
+            <button (click)="editUser(user)">Edit</button>
+            <button (click)="deleteUser(user.userId)">Delete</button>
+          </td>
+        </tr>
+
+  </tbody>
+</table>
+
