@@ -1,0 +1,159 @@
+/* .page-card {
+  background: #fff;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 20px 44px rgba(15, 23, 42, 0.06);
+}
+
+.page-toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.page-toolbar h1,
+.editor-header h2 {
+  margin: 0;
+  color: #0f172a;
+}
+.members-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 16px;
+}
+
+.member-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.primary-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.remove-btn {
+  background: red;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+} */
+
+
+.members-container {
+  padding: 20px;
+}
+
+.layout-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.tasks-card,
+.members-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.card-header h2 {
+  margin: 0;
+  color: #0f172a;
+}
+
+.task-list,
+.member-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.task-item,
+.member-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  background: #f8fafc;
+}
+
+.member-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-top h3,
+.member-info h4 {
+  margin: 0 0 8px 0;
+  color: #0f172a;
+}
+
+.task-item p {
+  margin: 0 0 12px 0;
+  color: #475569;
+}
+
+.task-meta {
+  font-size: 14px;
+  color: #334155;
+}
+
+.primary-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.remove-btn {
+  background: red;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.add-member-box {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.add-member-box select {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+}
+
+.empty {
+  color: #64748b;
+  padding: 12px 0;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .layout-grid {
+    grid-template-columns: 1fr;
+  }
+}

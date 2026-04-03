@@ -1,0 +1,85 @@
+<section class="page-card">
+  <div class="page-toolbar">
+    <div>
+      <h1> {{project.name}}</h1>
+      <p class="subtitle">{{project.description}}</p>
+    </div>
+  </div>
+
+<div class="members-container">
+  <div class="layout-grid">
+
+    <!-- Left side: Tasks -->
+    <div class="tasks-card">
+      <div class="card-header">
+        <h2>Tasks</h2>
+        <!-- <button class="primary-btn" (click)="openCreateTask()">+ Add Task</button> -->
+      </div>
+
+      <div *ngIf="tasks.length === 0" class="empty">
+        No tasks found
+      </div>
+
+      <div class="task-list">
+        <div class="task-item" *ngFor="let task of tasks">
+          <div class="task-top">
+            <h3>{{ task.title }}</h3>
+          </div>
+
+          <p>{{ task.description || 'No description' }}</p>
+
+          <div class="task-meta">
+            <span><strong>Priority:</strong> {{ task.priority || 'N/A' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right side: Project Members -->
+    <div class="members-card">
+      <div class="card-header">
+        <h2>Project Members</h2>
+        <button (click)="toggleAddMember()" class="primary-btn">
+          {{ showAddMember ? 'Close' : '+ Add Member' }}
+        </button>
+      </div>
+
+      <div *ngIf="showAddMember" class="add-member-box">
+        <select [(ngModel)]="selectedUserId">
+          <option [ngValue]="null">-- Select User --</option>
+          <option *ngFor="let user of availableUsers" [ngValue]="user.userId">
+            {{ user.name }} ({{ user.email }})
+          </option>
+        </select>
+
+        <button
+          class="primary-btn"
+          (click)="addMember()"
+          [disabled]="!selectedUserId">
+          Add
+        </button>
+      </div>
+
+      <div *ngIf="projectMembers.length === 0" class="empty">
+        No members added
+      </div>
+
+      <div class="member-list">
+        <div class="member-item" *ngFor="let member of projectMembers">
+          <div class="member-info">
+            <h4>{{ member.userName }}</h4>
+          </div>
+
+          <button
+            class="remove-btn"
+            (click)="removeMember(member.userId)">
+            Remove
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</section>

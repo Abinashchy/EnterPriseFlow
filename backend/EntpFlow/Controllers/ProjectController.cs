@@ -1,17 +1,20 @@
 
+using EntpFlow.DTOs.Projects;
+using EntpFlow.Interfaces;
 using EntpFlow.Models;
 using EntpFlow.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EntpFlow.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize(Roles = "Admin, Manager")]
 public class ProjectController : ControllerBase
 {
-    private readonly ProjectService _service;
-
-    public ProjectController(ProjectService service)
+    private readonly IProjectService _service;
+    public ProjectController(IProjectService service, IAccessControlService accessControl)
     {
         _service = service;
     }
@@ -35,36 +38,26 @@ public class ProjectController : ControllerBase
             return NotFound("Project not exist");
 
         }
-        return proj;
+        return Ok(proj);
     }
-
-    public async Task<IActionResult> CreateProject(Project project)
+    [HttpPost]
+    // [Authorize(Roles = "Admin, Manager")]
+    public async Task<IActionResult> CreateProject(CreateProjectDto project)
     {
         await _service.CreateProject(project);
         return Ok();
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateProject(int id, Project project)
+    // [Authorize(Roles = "Admin, Manager")]
+    public async Task<IActionResult> UpdateProject(int id, UpdateProjectDto project)
     {
-        project.Id = id;
-        try
-        {
-            var oldProject = await _service.GetProjectById(id);
-            if (oldProject == null)
-                return NotFound();
-
-            await _service.UpdateProject(project);
-
-        }
-        catch(Exception)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Error Updating data");
-        }
+        await _service.UpdateProject(id, project);
         return Ok(project);
     }
 
-        [HttpDelete("{id}")]
+    [HttpDelete("{id}")]
+    // [Authorize(Roles = "Admin, Manager")]
     public async Task<IActionResult> DeleteProject(int id)
     {
         var proj = await _service.GetProjectById(id);
@@ -77,9 +70,6 @@ public class ProjectController : ControllerBase
         return Ok(proj);
         
     }
-
-
-
 
 
 }

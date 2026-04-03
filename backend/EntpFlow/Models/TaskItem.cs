@@ -10,7 +10,19 @@ public class TaskItem
 
     public string? Description { get; set; }
 
-    public string Status { get; set; } = "Pending";   //Make this enum 
+    public enum WorkStatus
+{
+    Created,
+    Assigned,
+    InProgress,
+    CodeReview,
+    ReadyForTesting,
+    Completed,
+    Cancelled,
+    Done
+}
+
+    public WorkStatus Status { get; set; } = WorkStatus.Created;   //Make this enum 
 
     public string? Priority { get; set; }
 

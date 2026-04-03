@@ -1,0 +1,47 @@
+<section class="page-card">
+  <div class="header-block">
+    <p class="eyebrow">Administration</p>
+    <h1>Create Project</h1>
+    <p class="subtitle">Provision a new Project account with the correctdepartment mapping.</p>
+  </div>
+
+  <p class="error-banner" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+  <form class="form-grid" (ngSubmit)="createProject()">
+
+    <label>
+      <span>Project Name</span>
+      <input type="text" [(ngModel)]="newProject.name" name="name" required />
+    </label>
+
+    <label>
+      <span>Description</span>
+      <input type="text" [(ngModel)]="newProject.description" name="description" required />
+    </label>
+
+    <label *ngIf="authService.hasRole('Admin')">
+      <span>Department</span>
+      <select [(ngModel)]="newProject.departmentId" name="departmentId">
+        <option [ngValue]="null">Select department</option>
+        <option *ngFor="let department of departments" [ngValue]="department.id">
+          {{ department.name }}
+        </option>
+      </select>
+    </label>
+
+    <p *ngIf="errorMessage" class="form-error">
+      {{ errorMessage }}
+    </p>
+
+    <p *ngIf="successMessage" class="form-success">
+      {{ successMessage }}
+    </p>
+
+    <div class="form-actions">
+      <button class="primary-btn" type="submit" [disabled]="issubmitting">
+        {{ issubmitting ? 'Creating...' : 'Create Project' }}
+      </button>
+      <a routerLink="/projects" class="ghost-link">Back to Project</a>
+    </div>
+  </form>
+</section>

@@ -1,0 +1,65 @@
+<section class="page-card">
+  <div class="page-toolbar">
+    <div>
+      <p class="eyebrow">Workflow</p>
+      <h1>Task Board</h1>
+      <p class="subtitle">Drag and drop tasks to update their status.</p>
+    </div>
+  </div>
+
+  @if (isLoading) {
+    <div class="empty-state">Loading board...</div>
+  } @else {
+    <div class="board">
+      @for (column of columns; track column.key) {
+        <div
+          class="board-column"
+          (dragover)="onDragOver($event)"
+          (drop)="onDrop($event, column)">
+
+          <div class="column-header">
+            <h3>{{ column.label }}</h3>
+            <span class="column-count">{{ getColumnCount(column) }}</span>
+          </div>
+
+          <div class="column-body">
+            @for (task of column.tasks; track task.id) {
+              <div
+                class="task-card"
+                draggable="true"
+                (dragstart)="onDragStart($event, task)"
+                (dragend)="onDragEnd()"
+                (click)="openTask(task)">
+
+                <div class="card-title">{{ task.title }}</div>
+
+                <div class="card-meta">
+                  @if (task.projectName) {
+                    <span class="card-project">{{ task.projectName }}</span>
+                  }
+                </div>
+
+                @if (task.assignedToName) {
+                  <div class="card-assignee">
+                    <span class="assignee-avatar">{{ task.assignedToName.charAt(0) }}</span>
+                    <span>{{ task.assignedToName }}</span>
+                  </div>
+                }
+
+                @if (task.priority) {
+                  <span class="card-badge" [class]="getPriorityClass(task.priority)">
+                    {{ task.priority }}
+                  </span>
+                }
+              </div>
+            }
+
+            @if (column.tasks.length === 0) {
+              <div class="column-empty">No tasks</div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</section>

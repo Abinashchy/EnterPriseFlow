@@ -1,0 +1,97 @@
+@if (task) {
+<section class="page-card">
+  <div class="page-toolbar">
+    <div>
+      <p class="eyebrow">Task Details</p>
+      <h1>{{ task.title }}</h1>
+      <p class="subtitle">{{ task.description || 'No description provided' }}</p>
+    </div>
+    <button class="ghost-btn" (click)="goBack()">← Back to Tasks</button>
+  </div>
+
+  <div class="details-grid">
+    <div class="detail-card">
+      <h3>Project</h3>
+      <p>{{ task.projectName || 'N/A' }}</p>
+    </div>
+
+    <div class="detail-card">
+      <h3>Assigned To</h3>
+      <p>{{ task.assignedToName || 'Unassigned' }}</p>
+    </div>
+
+    <div class="detail-card">
+      <h3>Status</h3>
+      <span class="badge status-{{ task.status?.toLowerCase() }}">{{ task.status }}</span>
+    </div>
+
+    <div class="detail-card">
+      <h3>Priority</h3>
+      <span class="badge priority-{{ task.priority?.toLowerCase() }}">{{ task.priority || 'N/A' }}</span>
+    </div>
+
+    <div class="detail-card">
+      <h3>Created By</h3>
+      <p>{{ task.createdByName || 'N/A' }}</p>
+    </div>
+
+    <div class="detail-card">
+      <h3>Created At</h3>
+      <p>{{ task.createdAt | date:'medium' }}</p>
+    </div>
+  </div>
+
+  <!-- Comments Section -->
+  <div class="comments-section">
+    <h2>Comments</h2>
+
+    <div class="add-comment">
+      <textarea
+        [(ngModel)]="newComment"
+        name="newComment"
+        rows="3"
+        placeholder="Write a comment..."></textarea>
+      <button class="primary-btn" (click)="addComment()" [disabled]="!newComment.trim()">
+        Add Comment
+      </button>
+    </div>
+
+    @if (comments.length === 0) {
+      <p class="empty">No comments yet.</p>
+    }
+
+    <div class="comment-list">
+      @for (comment of comments; track comment.id) {
+        <div class="comment-item">
+          <div class="comment-header">
+            <span class="comment-author">{{ comment.userName }}</span>
+            <span class="comment-time">{{ comment.createdAt | date:'medium' }}</span>
+          </div>
+
+          @if (editingCommentId === comment.id) {
+            <div class="edit-comment">
+              <textarea
+                [(ngModel)]="editingCommentText"
+                name="editComment"
+                rows="2"></textarea>
+              <div class="edit-actions">
+                <button class="primary-btn small" (click)="saveEdit(comment.id)">Save</button>
+                <button class="ghost-btn small" (click)="cancelEdit()">Cancel</button>
+              </div>
+            </div>
+          } @else {
+            <p class="comment-body">{{ comment.comment }}</p>
+          }
+
+          @if (comment.userId === currentUserId && editingCommentId !== comment.id) {
+            <div class="comment-actions">
+              <button class="ghost-btn small" (click)="startEdit(comment)">Edit</button>
+              <button class="danger-btn small" (click)="deleteComment(comment.id)">Delete</button>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</section>
+}

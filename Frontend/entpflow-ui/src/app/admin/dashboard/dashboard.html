@@ -1,0 +1,18 @@
+<section class="dashboard-hero">
+  <div>
+    <p class="eyebrow">Overview</p>
+    <h1>Welcome, {{ currentUser?.name || 'User' }}</h1>
+
+  </div>
+  <div class="hero-badge">
+    <span>{{ currentUser?.role || 'Unknown Role' }}</span>
+  </div>
+</section>
+
+<section class="stat-grid">
+  <article class="stat-card" *ngFor="let stat of quickStats">
+    <p class="stat-title">{{ stat.title }}</p>
+    <h2>{{ stat.value }} </h2>
+    <p class="stat-description">{{ stat.description }}</p>
+  </article>
+</section>

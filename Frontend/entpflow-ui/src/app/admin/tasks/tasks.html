@@ -1,0 +1,140 @@
+<section class="page-card">
+  <div class="page-toolbar">
+    <div>
+      <p class="eyebrow">Administration</p>
+      <h1>Tasks Details</h1>
+      <p class="subtitle">Review task records, update status, and manage assignments.</p>
+    </div>
+
+    <button class="primary-btn" type="button" (click) = "openCreateTaskModal()">
+      Create Tasks
+    </button>
+
+
+  </div>
+
+
+  @if (!isLoading) {
+  <div class="table-wrapper">
+    <table class="tasks-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Project</th>
+          <th>Assigned To</th>
+          <th>Priority</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (task of tasks; track $index) {
+        <tr>
+          <td (click)="goToTask(task)" style="cursor: pointer;">{{ task.title }}</td>
+          <td>{{ task.projectName }}</td>
+          <td>{{ task.assignedToName }}</td>
+          <td>{{ task.priority }}</td>
+          <td>{{ task.status }}</td>
+          <td class="actions-cell">
+            <button class="edit-btn" (click)="openEditTaskModal(task)">Edit</button>
+            <button class="delete-btn" (click)="deleteTask(task.id)">Delete</button>
+          </td>
+        </tr>
+      }
+      </tbody>
+    </table>
+  </div>
+}
+@else{
+  <div class="empty-state">Loading tasks...</div>
+}
+
+@if(isTaskModalOpen) {
+<div class="modal-overlay" (click)="closeTaskModal()">
+  <div class="task-modal" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+      <h2>{{ isEditMode ? 'Edit Task' : 'Create Task' }}</h2>
+      <button class="close-btn" (click)="closeTaskModal()">×</button>
+    </div>
+
+    <form (ngSubmit)="submitTaskForm()" #taskNgForm="ngForm" class="task-form">
+
+      <div class="form-group">
+        <label>Title</label>
+        <input
+          type="text"
+          name="title"
+          [(ngModel)]="taskForm.title"
+          required
+          placeholder="Enter task title">
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea
+          name="description"
+          [(ngModel)]="taskForm.description"
+          rows="2"
+          placeholder="Enter task description"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Project</label>
+        <select name="projectId" [(ngModel)]="taskForm.projectId">
+          <option [ngValue]="null">-- Select Project --</option>
+          @for (project of projects; track project.id) {
+            <option [ngValue]="project.id">
+              {{ project.name }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Assign Member</label>
+        <select name="assignedTo" [(ngModel)]="taskForm.assignedTo">
+          <option [ngValue]="null">-- Select Member --</option>
+          @for (member of projectMembers; track member.userId) {
+            <option [ngValue]="member.userId">
+              {{ member.userName }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group half">
+          <label>Status</label>
+          <select name="status" [(ngModel)]="taskForm.status">
+            <option value="Created">Created</option>
+            <option value="Assigned">Assigned</option>
+            <option value="InProgress">Implementing</option>
+            <option value="CodeReview">Code Review</option>
+            <option value="ReadyForTesting">Ready for Testing</option>
+            <option value="Done">Done</option>
+            <option value="Completed">Completed</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
+
+        <div class="form-group half">
+          <label>Priority</label>
+          <select name="priority" [(ngModel)]="taskForm.priority">
+            <option value="">-- Select Priority --</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn" [disabled]="taskNgForm.invalid">
+        {{ isEditMode ? 'Update Task' : 'Create Task' }}
+      </button>
+    </form>
+  </div>
+</div>
+}
+
+</section>

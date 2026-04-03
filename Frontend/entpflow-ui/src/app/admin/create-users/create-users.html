@@ -1,0 +1,55 @@
+<section class="page-card">
+  <div class="header-block">
+    <p class="eyebrow">Administration</p>
+    <h1>Create user</h1>
+    <p class="subtitle">Provision a new user account with the correct role and department mapping.</p>
+  </div>
+
+  <p class="error-banner" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+  <form class="form-grid" (ngSubmit)="createUser()">
+    <label>
+      <span>Employee ID</span>
+      <input type="text" [(ngModel)]="newUser.employeeId" name="employeeId" required />
+    </label>
+
+    <label>
+      <span>Name</span>
+      <input type="text" [(ngModel)]="newUser.name" name="name" required />
+    </label>
+
+    <label>
+      <span>Email</span>
+      <input type="email" [(ngModel)]="newUser.email" name="email" required />
+    </label>
+
+    <label>
+      <span>Password</span>
+      <input type="password" [(ngModel)]="newUser.password" name="password" required />
+    </label>
+
+    <label>
+      <span>Role</span>
+      <select [(ngModel)]="newUser.role" name="role" required>
+        <option *ngFor="let role of roles" [ngValue]="role.name">{{ role.name }}</option>
+      </select>
+    </label>
+
+    <label>
+      <span>Department</span>
+      <select [(ngModel)]="newUser.department" name="department">
+        <!-- <option [ngValue]="null">No department</option> -->
+        <option *ngFor="let department of departments" [ngValue]="department.name">
+          {{ department.name }}
+        </option>
+      </select>
+    </label>
+
+    <div class="form-actions">
+      <button class="primary-btn" type="submit" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Creating...' : 'Create user' }}
+      </button>
+      <a routerLink="/users" class="ghost-link">Back to users</a>
+    </div>
+  </form>
+</section>

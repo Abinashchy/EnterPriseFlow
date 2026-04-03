@@ -126,6 +126,10 @@ public class ApplicationDbContext : DbContext
             .HasForeignKey(t => t.CreatedBy)
             .OnDelete(DeleteBehavior.Restrict);
 
+        modelBuilder.Entity<TaskItem>()
+            .Property(t => t.Status)
+            .HasConversion<string>();
+
         //     //-----------------------------------------
         //     // TaskComments
         //     //-----------------------------------------

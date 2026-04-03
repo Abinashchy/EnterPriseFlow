@@ -6,13 +6,17 @@ namespace EntpFlow.Models;
 public class User
 {
     public int UserId { get; set; }
-    [Required]
-    public string? EmployeeId {get; set;}
 
+    [Required]
+    public string? EmployeeId {get; set;} = string.Empty;
+
+    [Required]
     public string Name { get; set; } = string.Empty;
 
+    [Required]
     public string Email { get; set; } = string.Empty;
 
+    [Required]
     public string PasswordHash { get; set; } = string.Empty;
 
     public int? DepartmentId { get; set; }
@@ -25,6 +29,6 @@ public class User
     public Department? Department { get; set; }
     public Role? Role { get; set; }
 
-    public ICollection<ProjectMember>? ProjectMemberships { get; set; }
+    public ICollection<ProjectMember>? ProjectMemberships { get; set; } = new List<ProjectMember>();
 
 }

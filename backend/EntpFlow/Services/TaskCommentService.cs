@@ -26,4 +26,24 @@ public class TaskCommentService
         _context.TaskComments.Add(comment);
         await _context.SaveChangesAsync();
     }
+
+    public async Task UpdateComment(int id, string newComment, int userId)
+    {
+        var comment = await _context.TaskComments.FindAsync(id);
+        if (comment == null || comment.UserId != userId)
+            throw new Exception("Comment not found or unauthorized");
+
+        comment.Comment = newComment;
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task DeleteComment(int id, int userId)
+    {
+        var comment = await _context.TaskComments.FindAsync(id);
+        if (comment == null || comment.UserId != userId)
+            throw new Exception("Comment not found or unauthorized");
+
+        _context.TaskComments.Remove(comment);
+        await _context.SaveChangesAsync();
+    }
 }

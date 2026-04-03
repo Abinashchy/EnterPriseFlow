@@ -1,0 +1,26 @@
+# Backend excludes
+backend/.vs/
+backend/**/bin/
+backend/**/obj/
+backend/**/Properties/
+backend/**/appsettings.Development.json
+backend/**/appsettings.json
+backend/**/*.csproj.user
+backend/**/*.csproj
+backend/**/EntpFlow.http
+backend/**/*.sln
+backend/EntpFlow.Tests/
+
+# Root solution
+Entpflow.sln
+
+# Frontend excludes
+Frontend/entpflow-ui/.angular/
+Frontend/entpflow-ui/.vscode/
+Frontend/entpflow-ui/.git/
+Frontend/entpflow-ui/.gitignore
+Frontend/entpflow-ui/node_modules/
+Frontend/entpflow-ui/public/
+Frontend/entpflow-ui/.editorconfig
+Frontend/entpflow-ui/**/*.json
+Frontend/entpflow-ui/**/*.zip

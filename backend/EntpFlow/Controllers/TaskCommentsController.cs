@@ -19,7 +19,16 @@ public class TaskCommentsController : ControllerBase
     public async Task<IActionResult> GetComments(int taskId)
     {
         var comments = await _service.GetComments(taskId);
-        return Ok(comments);
+        var result = comments.Select(c => new
+        {
+            c.Id,
+            c.TaskId,
+            c.UserId,
+            c.Comment,
+            c.CreatedAt,
+            UserName = c.User?.Name ?? "Unknown"
+        });
+        return Ok(result);
     }
 
     [HttpPost]
@@ -28,4 +37,24 @@ public class TaskCommentsController : ControllerBase
         await _service.AddComment(comment);
         return Ok();
     }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateComment(int id, [FromBody] UpdateCommentRequest request)
+    {
+        await _service.UpdateComment(id, request.Comment, request.UserId);
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteComment(int id, [FromQuery] int userId)
+    {
+        await _service.DeleteComment(id, userId);
+        return NoContent();
+    }
+}
+
+public class UpdateCommentRequest
+{
+    public string Comment { get; set; } = string.Empty;
+    public int UserId { get; set; }
 }

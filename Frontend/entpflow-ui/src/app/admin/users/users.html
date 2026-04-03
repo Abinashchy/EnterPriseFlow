@@ -1,0 +1,106 @@
+<section class="page-card">
+  <div class="page-toolbar">
+    <div>
+      <p class="eyebrow">Administration</p>
+      <h1>User Details</h1>
+      <p class="subtitle">Review user records, update access metadata, and manage active accounts securely.</p>
+    </div>
+
+    <button *ngIf="canCreateUsers" class="primary-btn" type="button" (click)="navigateToCreate()">
+      Create user
+    </button>
+  </div>
+
+  <p class="error-banner" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+  <div class="editor-panel" *ngIf="editingUser">
+    <div class="editor-header">
+      <div>
+        <p class="eyebrow">Edit user</p>
+        <h2>Update account details</h2>
+      </div>
+      <button type="button" class="ghost-btn" (click)="cancelEdit()">Cancel</button>
+    </div>
+
+    <div class="form-grid">
+      <label>
+        <span>Employee ID</span>
+        <input [(ngModel)]="editingUser.employeeId" name="employeeId" />
+      </label>
+
+      <label>
+        <span>Name</span>
+        <input [(ngModel)]="editingUser.name" name="name" />
+      </label>
+
+      <label>
+        <span>Email</span>
+        <input [(ngModel)]="editingUser.email" name="email" type="email" />
+      </label>
+
+      <label>
+        <span>Role</span>
+        <select [(ngModel)]="editingUser.role" name="role">
+          <option *ngFor="let role of roles" [ngValue]="role.name">{{ role.name }}</option>
+        </select>
+      </label>
+
+      <label>
+        <span>Department</span>
+        <select [(ngModel)]="editingUser.department" name="department">
+          <option [ngValue]="null">No department</option>
+          <option *ngFor="let department of departments" [ngValue]="department.name">
+            {{ department.name }}
+          </option>
+        </select>
+      </label>
+
+      <label class="toggle-field">
+        <span>Active status</span>
+        <input [(ngModel)]="editingUser.isActive" name="isActive" type="checkbox" />
+      </label>
+    </div>
+
+    <div class="editor-actions">
+      <button class="primary-btn" type="button" (click)="updateUser()">Save changes</button>
+    </div>
+  </div>
+
+  <div class="table-wrapper" *ngIf="!isLoading; else loadingState">
+    <table class="users-table">
+      <thead>
+        <tr>
+          <th>Employee ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Department</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.employeeId }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.role }}</td>
+          <td>{{ user.department || '—' }}</td>
+          <td>
+            <span class="status-pill" [class.status-inactive]="!user.isActive">
+              {{ user.isActive ? 'Active' : 'Inactive' }}
+            </span>
+          </td>
+          <td class="action-cell">
+            <button class="ghost-btn" type="button" (click)="editUser(user)">Edit</button>
+            <button class="danger-btn" type="button" (click)="deleteUser(user.userId)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #loadingState>
+    <div class="empty-state">Loading users...</div>
+  </ng-template>
+</section>

@@ -1,0 +1,64 @@
+<div class="login-shell">
+  <div class="login-panel brand-panel">
+    <div>
+      <p class="eyebrow">Enterprise Workflow Platform</p>
+      <h1>Enterprise Workflow</h1>
+      <p class="lead">
+        Secure project operations, user administration, and department-level execution in a single workspace.
+      </p>
+    </div>
+
+    <div class="feature-list">
+      <div class="feature-item">
+        <span class="feature-dot"></span>
+        JWT-secured access for protected operations
+      </div>
+      <div class="feature-item">
+        <span class="feature-dot"></span>
+        Role-aware navigation for Admin and Manager workflows
+      </div>
+      <div class="feature-item">
+        <span class="feature-dot"></span>
+        Clean, scalable Angular architecture for enterprise teams
+      </div>
+    </div>
+  </div>
+
+  <div class="login-panel form-panel">
+    <div class="form-header">
+      <p class="eyebrow">Sign in</p>
+      <h2>Welcome back</h2>
+      <p>Use your credentials to continue.</p>
+    </div>
+
+    <form (ngSubmit)="login()" class="login-form">
+      <label>
+        <span>Email</span>
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="form.email"
+          placeholder="name@company.com"
+          required
+        />
+      </label>
+
+      <label>
+        <span>Password</span>
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="form.password"
+          placeholder="Enter your password"
+          required
+        />
+      </label>
+
+      <button type="submit" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Signing in...' : 'Sign in' }}
+      </button>
+
+      <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+    </form>
+  </div>
+</div>
