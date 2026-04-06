@@ -27,3 +27,4 @@ import_final.sql
 import_final2.sql
 import_users_clean.sql
 users_check.txt
+sync-data.sql
