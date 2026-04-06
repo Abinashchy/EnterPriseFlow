@@ -24,3 +24,15 @@ Frontend/entpflow-ui/public/
 Frontend/entpflow-ui/.editorconfig
 Frontend/entpflow-ui/**/*.json
 Frontend/entpflow-ui/**/*.zip
+
+export_departments.sql
+export_projectmembers.sql
+export_projects.sql
+export_users.sql
+export_roles.sql
+export_tasks.sql
+import_all.sql
+import_final.sql
+import_final2.sql
+import_users_clean.sql
+users_check.txt

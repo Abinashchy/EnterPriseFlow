@@ -8,7 +8,7 @@ import { TaskComment, CreateComment, UpdateComment } from '../models/task-commen
 })
 export class TaskCommentService {
 
-  private readonly api = 'https://localhost:7033/api/TaskComments';
+  private readonly api = '/api/TaskComments';
 
   constructor(private http: HttpClient) {}
 

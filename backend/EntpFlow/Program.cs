@@ -20,8 +20,8 @@ builder.Services.AddControllers()
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddCors(options => {options.AddPolicy("AllowAngular", policy => { policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();});});
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), sqlOptions => sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(10), errorNumbersToAdd: null)));
+builder.Services.AddCors(options => {options.AddPolicy("AllowAngular", policy => { policy.WithOrigins("http://localhost:4200", "http://frontend", "http://frontend:80").AllowAnyHeader().AllowAnyMethod();});});
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<ITokenService, TokenService>();
@@ -65,6 +65,12 @@ builder.Services.AddAuthorization(options =>
 
 var app = builder.Build();
 
+// Auto-apply migrations (creates DB if it doesn't exist)
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

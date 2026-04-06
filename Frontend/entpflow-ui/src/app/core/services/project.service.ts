@@ -9,7 +9,7 @@ import { GetProjects, CreateProjectRequest, ProjectMembers, CreateMembers } from
 export class ProjectService {
 
   private readonly projectApi = 'api/Project';
-  private readonly projectmembersApi = 'https://localhost:7033/api/projectmembers/project';
+  private readonly projectmembersApi = '/api/projectmembers/project';
 
   constructor(private http: HttpClient){}
 
@@ -29,11 +29,11 @@ export class ProjectService {
 }
 
   addMembers(payload: CreateMembers): Observable<ProjectMembers> {
-    return this.http.post<ProjectMembers>('https://localhost:7033/api/projectmembers', payload);
+    return this.http.post<ProjectMembers>('/api/projectmembers', payload);
   }
 
   removeMember(projectId: number, userId: number): Observable<void> {
-    return this.http.delete<void>(`https://localhost:7033/api/projectmembers/project/${projectId}/user/${userId}`);
+    return this.http.delete<void>(`/api/projectmembers/project/${projectId}/user/${userId}`);
   }
 
 }

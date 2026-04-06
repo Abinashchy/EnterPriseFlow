@@ -8,7 +8,7 @@ import { GetTasks } from '../models/Tasks.model';
 })
 export class TasksService {
 
-  private readonly taskApi = 'https://localhost:7033/api/taskItems';
+  private readonly taskApi = '/api/taskItems';
 
   constructor (private http: HttpClient) {}
 
